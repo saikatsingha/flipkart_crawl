@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'mobiles',
 ]
 
 MIDDLEWARE = [
@@ -75,9 +76,14 @@ WSGI_APPLICATION = 'flipkart_crawl.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'test',
+        'USER': 'saikat1',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
+        'PORT': '',
     }
+
 }
 
 
