@@ -1,24 +1,34 @@
-# from crawler.settings import BASE_DIR
 import os
 from django.shortcuts import render
 import requests
 from bs4 import BeautifulSoup as bs
-# from data_crawl.models import Product_details, Product_type as pt
 import shutil 
 import psycopg2
+import pyshorteners as sh
 
 # Create your views here.
 
-conn = psycopg2.connect(
-    host="localhost",
-    database="test",
-    user="saikat1",
-    password="1234")
-cursor = conn.cursor()
-# insert into CRICKETERS (First_Name, Last_Name, Age, Place_Of_Birth, Country) values('Shikhar', 'Dhawan', 33, 'Delhi', 'India');
-cursor.execute("Insert Into mobiles_product_details (company_name, price, photo, ram, rom, expandable, display, camera, battery, processor, link, warranty, star, rating, review, in_the_box, product_type_id) values('Reddfgdgdcdcmi1', 9999, 'None', 4, 32, 512, 6.5, '30 mg pxl', 5000, 'mediatech', 'https://www.flipkart.com/mobiles/pr?sid=tyy%2C4io&otracker=categorytree&page=1', '1 years', 4.3, 3200, 170, 'all items', 1);")
+# conn = psycopg2.connect(
+#     host="localhost",
+#     database="test",
+#     user="saikat1",
+#     password="1234")
+# cursor = conn.cursor()
+# cursor.execute("""Insert Into mobiles_product_details (company_name, price, photo, ram, rom, expandable, display, camera, battery, processor, link, warranty, star, rating, review, in_the_box, product_type_id) values('ddgdgs', 9999, 'None', 4, 32, 512, 6.5, '30 mg pxl', 5000, 'mediatech', 'https://www.flipkart.com/mobiles/pr?sid=tyy%2C4io&otracker=categorytree&page=1', '1 years', 4.3, 3200, 170, 'all items', 1)""")
+# conn.commit()
+# cursor.close()
+# conn.close()
 
-# page = requests.get("https://www.flipkart.com/mobiles/pr?sid=tyy,4io&otracker=categorytree")
+page = requests.get("https://www.flipkart.com/mobiles/pr?sid=tyy%2C4io&otracker=categorytree&page=1")
+
+# k=1
+# for k in range(10):
+#     print('https://www.flipkart.com/mobiles/pr?sid=tyy%2C4io&otracker=categorytree&page='+str(k))
+#     k+=1
+# link = 'https://www.flipkart.com/mobiles/pr?sid=tyy,4io&otracker=categorytree'
+# s = sh.Shortener()
+# print(s.tinyurl.short(link))
+
 # soup = bs(page.content, "html.parser")
 # i = 0
 # k = 0
