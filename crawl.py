@@ -5,6 +5,8 @@ from bs4 import BeautifulSoup as bs
 import shutil 
 import psycopg2
 import pyshorteners as sh
+from selenium import webdriver
+from webdriver_manager.firefox import GeckoDriverManager
 
 # Create your views here.
 
@@ -20,6 +22,19 @@ import pyshorteners as sh
 # conn.close()
 
 page = requests.get("https://www.flipkart.com/mobiles/pr?sid=tyy%2C4io&otracker=categorytree&page=1")
+
+# driver = webdriver.Firefox()
+# driver.get("https://www.flipkart.com/mobiles/pr?sid=tyy%2C4io&otracker=categorytree&page=1")
+# identify elements with tagname <a>
+lnks=page.find_elements_by_tag_name("a")
+# traverse list
+for lnk in lnks:
+   # get_attribute() to get all href
+   print(lnk.get_attribute('href'))
+# driver.quit()
+
+
+
 
 # k=1
 # for k in range(10):
@@ -41,6 +56,7 @@ page = requests.get("https://www.flipkart.com/mobiles/pr?sid=tyy%2C4io&otracker=
 # Image = []
 # Price = []
 # path  = []
+url = soup.find_all("div" , attrs={"class":"_4rR01T"})
 # Name = soup.find_all("div" , attrs={"class":"_4rR01T"})
 # Price = soup.find_all("div" , attrs={"class":"_30jeq3 _1_WHN1"})
 # Ram = soup.find_all("li", attrs={"class":"rgWa7D"})
