@@ -22,7 +22,7 @@ class Product_details(models.Model):
     expandable = models.IntegerField(null=True, blank=True)
     display = models.FloatField(null=True, blank=True)
     camera = models.CharField(max_length=100, blank=True)
-    battery = models.IntegerField(null=True, blank=True)
+    battery = models.CharField(max_length=100, blank=True)
     processor = models.CharField(max_length=100, blank=True)
     link = models.CharField(max_length=200, blank=True)
     warranty = models.CharField(max_length=200, blank=True)
