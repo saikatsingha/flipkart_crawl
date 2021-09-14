@@ -9,6 +9,13 @@ from selenium import webdriver
 from webdriver_manager.firefox import GeckoDriverManager
 
 
+conn = psycopg2.connect(
+host="localhost",
+database="test",
+user="saikat1",
+password="1234")
+
+s = sh.Shortener()
 
 page = requests.get("https://www.flipkart.com/mobiles/pr?sid=tyy%2C4io&otracker=categorytree&page=1")
 p=1
@@ -48,47 +55,65 @@ while(True):
       k=0
 
       name = Name.get_text().replace(")",'').replace("(",'').replace(",",' ')
-      # print(Price.get_text().replace("₹",'').strip())
+      # print(Price.get_text().replace("₹",'').replace(",",'').strip())
       for k in range(len(Details_Data_Type)):
          if Details_Data_Type[k].get_text() == 'In The Box':
-            print(Details_Data[k].get_text())
+            In_The_Box = Details_Data[k].get_text()
          if Details_Data_Type[k].get_text() == 'Display Size':
-            print(Details_Data[k].get_text())
+            # print(Details_Data[k].get_text())
+            Display_Size = Details_Data[k].get_text()
          if Details_Data_Type[k].get_text() == 'Processor Type':
-            print(Details_Data[k].get_text())
+            # print(Details_Data[k].get_text())
+            Processor_Type = Details_Data[k].get_text()+' '
          if Details_Data_Type[k].get_text() == 'Processor Core':
-            print(Details_Data[k].get_text())
+            # print(Details_Data[k].get_text())
+            Processor_Core = Details_Data[k].get_text()
          if Details_Data_Type[k].get_text() == 'Internal Storage':
-            print(Details_Data[k].get_text().replace(' ', '').replace('GB', '').strip())
+            # print(Details_Data[k].get_text().replace(' ', '').replace('GB', '').strip())
+            Internal_Storage = Details_Data[k].get_text().replace(' ', '').replace('GB', '').strip()
          if Details_Data_Type[k].get_text() == 'RAM':
-            print(Details_Data[k].get_text().replace(' ', '').replace('GB', '').strip())
+            # print(Details_Data[k].get_text().replace(' ', '').replace('GB', '').strip())
+            RAM = Details_Data[k].get_text().replace(' ', '').replace('GB', '').strip()
          if Details_Data_Type[k].get_text() == 'Expandable Storage':
-            print(Details_Data[k].get_text().replace(' ', '').replace('GB', '').strip())
-            expandable_storage = Details_Data[k].get_text()
+            # print(Details_Data[k].get_text().replace(' ', '').replace('GB', '').strip())
+            expandable_storage = Details_Data[k].get_text().replace('GB', '').strip()
          if Details_Data_Type[k].get_text() == 'Primary Camera':
-            print(Details_Data[k].get_text())
+            # print(Details_Data[k].get_text())
+            Primary_Camera = Details_Data[k].get_text()
          if Details_Data_Type[k].get_text() == 'Battery Capacity':
-            print(Details_Data[k].get_text())
-         
+            # print(Details_Data[k].get_text())
+            Battery_Capacity = Details_Data[k].get_text().replace('mAh', '').strip()
+         if Details_Data_Type[k].get_text() == 'Warranty Summary':
+            # print(Details_Data[k].get_text())
+            Warranty_Summary = Details_Data[k].get_text()
          k=k+1
 
       # print(Image.get_text())
       # print(Star.get_text())
       # print(Rating.get_text())
       # print(Image.get('src'))
-      conn = psycopg2.connect(
-      host="localhost",
-      database="test",
-      user="saikat1",
-      password="1234")
+
             
       cursor = conn.cursor()
       cursor.execute("""Insert Into mobiles_product_details 
-                     (company_name, price, photo, ram, rom, expandable, display, camera, battery, processor, 
-                     link, warranty, star, rating, review, in_the_box, product_type_id) values
-                     ("""+str(name)+""", 9999, 'None', 4, 32, 512, 6.5, '30 mg pxl', 5000, 'mediatech', 
-                     'https://www.flipkart.com/mobiles/pr?sid=tyy%2C4io&otracker=categorytree&page=1', '1 years', 
-                     4.3, 3200, 170, 'all items', 1)""")
+                     (company_name, price, photo, ram, internal_storage, expandable, display, camera, battery, processor, 
+                     link, warranty, star, rating_review, in_the_box, product_type_id) values
+                     ('"""+str(name)+"""',
+                     """ + Price.get_text().replace("₹",'').replace(",",'').strip()+""",
+                     '"""+image_name+"""', 
+                     """+RAM+""", 
+                     """+Internal_Storage+""", 
+                     """+expandable_storage+""", 
+                     '"""+Display_Size+"""', 
+                     '"""+Primary_Camera+"""', 
+                     """+Battery_Capacity+""",  
+                     '"""+Processor_Type+Processor_Core+"""',  
+                     '"""+s.tinyurl.short(lnk)+"""',
+                     '"""+Warranty_Summary+"""',
+                     """+Star.get_text()+""", 
+                     '"""+Rating.get_text()+"""',
+                     '"""+In_The_Box+"""',
+                     1)""")
       # sql = "Insert Into mobiles_product_details (company_name, price, photo, ram, rom, expandable, display, camera, battery, processor, link, warranty, star, rating, review, in_the_box, product_type_id) VALUES (%s, %s,%s, %s,%s, %s,%s, %s,%s, %s,%s, %s,%s, %s,%s, %s,%s,)"
       # val = ('hdhfhghsg', 9999, 'None', 4, 32, 512, 6.5, '30 mg pxl', 5000, 'mediatech','https://www.flipkart.com/mobiles/pr?sid=tyy%2C4io&otracker=categorytree&page=1', '1 years', 4.3, 3200, 170, 'all items', 1)
       # cursor.execute("""Insert Into mobiles_product_details (company_name, product_type_id) VALUES ('hhjhjh', 1)""")
@@ -96,6 +121,8 @@ while(True):
       # cursor.execute(sql, val)
       conn.commit()
       cursor.close()
-      conn.close()
+      
    p=p+1
+
+conn.close()
 
