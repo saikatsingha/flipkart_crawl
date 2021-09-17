@@ -11,8 +11,6 @@ class Product_type(models.Model):
         return self.product_name
 
 
-
-
 class Product_details(models.Model):
     company_name = models.CharField(max_length=200, unique = True)
     price = models.FloatField(null=True, blank=True)
