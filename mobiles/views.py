@@ -11,8 +11,7 @@ from mobiles.serializers import Product_type_Serializers, Product_details_Serial
 
 @csrf_exempt
 
-def mobilesAPI(request, id=0):
-    if request.method == 'GET':
-        mobiles = Product_details.objects.all()
-        mobiles_serializer = Product_type_Serializers.data(mobiles, many=True)
-        return JsonResponse(mobiles_serializer.data, safe=False)
+def mobilesApi(request):
+    mobiles = Product_details.objects.all()
+    mobiles_serializers = Product_details_Serializers.data(mobiles, many=True)
+    return JsonResponse(mobiles_serializers.data, safe=False)
