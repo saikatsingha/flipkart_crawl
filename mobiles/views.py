@@ -9,9 +9,9 @@ from mobiles.serializers import Product_type_Serializers, Product_details_Serial
 
 # Create your views here.
 
-@csrf_exempt
+# @csrf_exempt
 
 def mobilesApi(request):
     mobiles = Product_details.objects.all()
-    mobiles_serializers = Product_details_Serializers.data(mobiles, many=True)
-    return JsonResponse(mobiles_serializers.data, safe=False)
+    mob_serializers = Product_details_Serializers(mobiles, many=True)
+    return JsonResponse(mob_serializers.data, safe=False)
